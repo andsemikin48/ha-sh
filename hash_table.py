@@ -45,19 +45,24 @@ class HashTable:
     def size(self):
         return len(self.table)
 
-def aspi_hash(string_):
-    #конкатенация ASCII значений в виде строки
-    result = ''
-    for i in string_:
-        result += str(ord(i))
-    return result
+    def aspi_hash(self, string_):
+        #конкатенация ASCII значений в виде строки
+        result = ''
+        for i in string_:
+            result += str(ord(i))
+            sum_ = 0
+        for i in result:
+            sum_ += int(i)
+        sum_ %= self.size
+        return sum_
 
-def aspi_hash_sum(string_):
-    #сумма ASCII значений, более короткий резутат
-    result = 0
-    for i in string_:
-        result += ord(i)
-    return result
+    def aspi_hash_sum(self, string_):
+        #сумма ASCII значений
+        result = 0
+        for i in string_:
+            result += ord(i)
+            result %= self.size
+        return result
 
 
 table = HashTable(10)
@@ -75,11 +80,11 @@ print(table.table)
 print(table.delete('Симон'))
 print(table.table)
 
-print(aspi_hash('Филя'))
-print(aspi_hash('Симон'))
-print(aspi_hash_sum('Симон'))
-print(aspi_hash_sum('Мурка'))
-print(aspi_hash_sum('Кот'))
-print(aspi_hash_sum('Ток')) #Коллизия буквы одинаковые, и сумма будет одинаковая
-print(aspi_hash('Кот'))
-print(aspi_hash('Ток')) #Тут хеш будет различаться, так как индексы букв разные
+print("Хеш Филя", table.aspi_hash('Филя'))
+print("Хеш Симон", table.aspi_hash('Симон'))
+print("Хеш суммы Симон", table.aspi_hash_sum('Симон'))
+print("Хеш суммы Мурка", table.aspi_hash_sum('Мурка'))
+print("Хеш суммы Кот", table.aspi_hash_sum('Кот'))
+print("Хеш суммы Ток", table.aspi_hash_sum('Ток')) #Коллизия буквы одинаковые, и сумма будет одинаковая
+print("Хеш Кот", table.aspi_hash('Кот'))
+print("Хеш Ток", table.aspi_hash('Ток')) #Тут хеш будет различаться, так как индексы букв разные
